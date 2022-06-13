@@ -6,77 +6,52 @@ import java.util.List;
 
 import javax.swing.text.html.FormSubmitEvent.MethodType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zensar.entity.Student;
+import com.zensar.service.StudentService;
 
 @RestController
+@RequestMapping("/studentapi")
 public class StudentController {
+	
+	@Autowired
+	private StudentService studentService;
 
-	private List<Student> students = new ArrayList<Student>();;
-
-	/*
-	 * public StudentController(){ students.add(new Student(1, "Syed", 20));
-	 * students.add(new Student(2, "Rahul", 22)); students.add(new Student(3, "Bob",
-	 * 16)); }
-	 */
-
-	@RequestMapping(value = "/student/{studentId}", method=RequestMethod.GET)
+	@GetMapping(value = "/student/{studentId}", produces = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
 	public Student getStudent(@PathVariable("studentId") int studentId) {
-		for (Student student : students) {
-			if (student.getStudentId() == studentId) {
-				return student;
-			}
-		}
-		return null;
+		return studentService.getStudent(studentId);
 	}
 
-	@RequestMapping(value = "/students", method = RequestMethod.GET)
+	@GetMapping(value = "/students", produces = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
 	public List<Student> getAllStudents() {
-		return students;
+		return studentService.getAllStudents();
 	}
 
-	@RequestMapping(value = "/student", method = RequestMethod.POST)
-	public Student insertStudents(@RequestBody Student student) {
-		students.add(student);
-		
-		return student;
+	@PostMapping(value = "/student", consumes = { MediaType.APPLICATION_JSON_VALUE, MediaType.APPLICATION_XML_VALUE })
+	public void insertStudents(@RequestBody Student student) {
+		studentService.insertStudents(student);
 	}
-	
-	@RequestMapping(value = "/student/{studentId}", method = RequestMethod.PUT)
-	public Student updateStudents(@PathVariable("studentId") int studentId, 
-			@RequestBody Student student) {
-		Student studentUpdate  = getStudent(studentId);
-		studentUpdate.setStudentId(student.getStudentId());
-		studentUpdate.setStudentName(student.getStudentName());
-		studentUpdate.setStudentAge(student.getStudentAge());
-		
-		students.add(studentUpdate);
-		
-		return studentUpdate;
-	}
-	
-	
-	
-	  @RequestMapping(value = "/students", method = RequestMethod.POST) public void
-	  insertAllStudents(@RequestBody List<Student> student) {
-	  students.addAll(student); }
-	 
 
-	@RequestMapping(value = "/student/{studentId}", method = RequestMethod.DELETE)
+	@PutMapping(value = "/student/{studentId}", consumes = { MediaType.APPLICATION_JSON_VALUE,
+			MediaType.APPLICATION_XML_VALUE })
+	public void updateStudents(@PathVariable("studentId") int studentId, @RequestBody Student student) {
+		studentService.updateStudents(studentId, student);
+	}
+
+	@DeleteMapping("/student/{studentId}")
 	public void deleteStudents(@PathVariable("studentId") int studentId) {
-
-		Iterator<Student> it = students.iterator();
-
-		while (it.hasNext()) {
-			Student student = it.next();
-			if (student.getStudentId() == studentId) {
-				it.remove();
-			}
-		}
+		studentService.deleteStudents(studentId);
 	}
 }
