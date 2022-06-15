@@ -1,27 +1,22 @@
-package com.zensar.entity;
+package com.zensar.dto;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import java.util.List;
 
-@Entity
-public class Student {
+import com.zensar.entity.Student;
 
-	@Id
-	@Column(name = "id")
+public class StudentDto {
+
 	private int studentId;
 
-	@Column(name = "name")
 	private String studentName;
 
-	@Column(name = "age")
 	private int studentAge;
 
-	public Student() {
+	public StudentDto() {
 		super();
 	}
 
-	public Student(int studentId, String studentName, int studentAge) {
+	public StudentDto(int studentId, String studentName, int studentAge) {
 		super();
 		this.studentId = studentId;
 		this.studentName = studentName;
@@ -57,5 +52,6 @@ public class Student {
 		return "StudentController [studentId=" + studentId + ", studentName=" + studentName + ", studentAge="
 				+ studentAge + "]";
 	}
+
 
 }
