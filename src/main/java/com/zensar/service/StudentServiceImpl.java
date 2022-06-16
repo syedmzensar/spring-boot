@@ -1,17 +1,19 @@
 package com.zensar.service;
 
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Sort;
 
 import com.zensar.dto.StudentDto;
 import com.zensar.entity.Student;
 import com.zensar.repository.StudentRepository;
+
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -32,13 +34,16 @@ public class StudentServiceImpl implements StudentService {
 //		return studentToDto;
 	}
 
-	public List<StudentDto> getAllStudents() {
-		List<Student> listOfStudents = studentRepository.findAll();
+	public List<StudentDto> getAllStudents(int pageNumber, int pageSize) {
+//		List<Student> listOfStudents = studentRepository.findAll();
 		List<StudentDto> listOfStudentsDto = new ArrayList<StudentDto>();
 
-		for (Student l : listOfStudents) {
-//			listOfStudentsDto.add(mapToDto(l));
-			listOfStudentsDto.add(modelMapper.map(l, StudentDto.class));
+		Page<Student> findAllStudents = studentRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by("studentId").descending()));
+
+		List<Student> students = findAllStudents.getContent();
+
+		for (Student student : students) {
+			listOfStudentsDto.add(modelMapper.map(student, StudentDto.class));
 		}
 
 		return listOfStudentsDto;
@@ -64,6 +69,54 @@ public class StudentServiceImpl implements StudentService {
 	public void deleteStudents(int studentId) {
 		studentRepository.deleteById(studentId);
 
+	}
+
+	public List<StudentDto> testName(String studentName) {
+		List<Student> listOfStudents = studentRepository.testName(studentName);
+		List<StudentDto> listOfStudentsDto = new ArrayList<StudentDto>();
+
+		for (Student student : listOfStudents) {
+			listOfStudentsDto.add(modelMapper.map(student, StudentDto.class));
+		}
+
+		return listOfStudentsDto;
+
+	}
+
+	public List<StudentDto> testNameAndAge(String studentName, int studentAge) {
+		List<Student> listOfStudents = studentRepository.testNameAndAge(studentName, studentAge);
+		List<StudentDto> listOfStudentsDto = new ArrayList<StudentDto>();
+
+		for (Student student : listOfStudents) {
+			listOfStudentsDto.add(modelMapper.map(student, StudentDto.class));
+		}
+
+		return listOfStudentsDto;
+	}
+
+	public List<StudentDto> testAgeGreaterThan(int studentAge) {
+		List<Student> listOfStudents = studentRepository.testAgeGreaterThan(studentAge);
+		List<StudentDto> listOfStudentsDto = new ArrayList<StudentDto>();
+
+		for (Student student : listOfStudents) {
+			listOfStudentsDto.add(modelMapper.map(student, StudentDto.class));
+		}
+		return listOfStudentsDto;
+	}
+
+	public List<StudentDto> testStartsWithName(String studentName) {
+		List<Student> listOfStudents = studentRepository.testStartsWithName(studentName);
+		List<StudentDto> listOfStudentsDto = new ArrayList<StudentDto>();
+
+		for (Student student : listOfStudents) {
+			listOfStudentsDto.add(modelMapper.map(student, StudentDto.class));
+		}
+
+		return listOfStudentsDto;
+	}
+
+	public int sumAge() {
+		return studentRepository.sumAge();
 	}
 
 	/*

@@ -3,13 +3,12 @@ package com.zensar.service;
 import java.util.List;
 
 import com.zensar.dto.StudentDto;
-import com.zensar.entity.Student;
 
 public interface StudentService {
 
 	public StudentDto getStudent(int studentId);
 
-	public List<StudentDto> getAllStudents();
+	public List<StudentDto> getAllStudents(int pageNumber, int pageSize);
 
 	public StudentDto insertStudents(StudentDto studentDto);
 
@@ -17,4 +16,13 @@ public interface StudentService {
 
 	public void deleteStudents(int studentId);
 
+	List<StudentDto> testName(String studentName);
+
+	List<StudentDto> testNameAndAge(String studentName, int studentAge);
+
+	List<StudentDto> testAgeGreaterThan(int studentAge);
+
+	List<StudentDto> testStartsWithName(String studentName);
+
+	int sumAge();
 }

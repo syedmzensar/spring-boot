@@ -3,8 +3,12 @@ package com.zensar.entity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.NamedNativeQuery;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 @Entity
+//@NamedNativeQuery(name = "testName", query = "select * from student", resultClass = Student.class)
 public class Student {
 
 	@Id
