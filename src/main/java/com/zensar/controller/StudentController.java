@@ -3,6 +3,7 @@ package com.zensar.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,10 @@ public class StudentController {
 	@GetMapping(value = "/students")
 	public ResponseEntity<List<StudentDto>> getAllStudents(
 			@RequestParam(required = false, defaultValue = "0") int pageNumber,
-			@RequestParam(required = false, defaultValue = "5") int pageSize) {
-		return new ResponseEntity<List<StudentDto>>(studentService.getAllStudents(pageNumber, pageSize), HttpStatus.OK);
+			@RequestParam(required = false, defaultValue = "50") int pageSize,
+			@RequestParam(required = false, defaultValue = "studentAge") String propertyName, @RequestParam(required = false, defaultValue = "ASC")Direction direction) {
+		return new ResponseEntity<List<StudentDto>>(studentService.getAllStudents(pageNumber, pageSize, propertyName, direction),
+				HttpStatus.OK);
 	}
 
 	@PostMapping(value = "/students")

@@ -7,13 +7,12 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
-import org.springframework.data.domain.Sort;
 
 import com.zensar.dto.StudentDto;
 import com.zensar.entity.Student;
 import com.zensar.repository.StudentRepository;
-
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -34,11 +33,12 @@ public class StudentServiceImpl implements StudentService {
 //		return studentToDto;
 	}
 
-	public List<StudentDto> getAllStudents(int pageNumber, int pageSize) {
+	public List<StudentDto> getAllStudents(int pageNumber, int pageSize, String propertyName, Direction direction) {
 //		List<Student> listOfStudents = studentRepository.findAll();
 		List<StudentDto> listOfStudentsDto = new ArrayList<StudentDto>();
 
-		Page<Student> findAllStudents = studentRepository.findAll(PageRequest.of(pageNumber, pageSize, Sort.by("studentId").descending()));
+		Page<Student> findAllStudents = studentRepository
+				.findAll(PageRequest.of(pageNumber, pageSize, direction, propertyName));
 
 		List<Student> students = findAllStudents.getContent();
 

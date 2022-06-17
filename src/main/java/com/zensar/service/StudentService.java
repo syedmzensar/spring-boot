@@ -2,13 +2,15 @@ package com.zensar.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Sort.Direction;
+
 import com.zensar.dto.StudentDto;
 
 public interface StudentService {
 
 	public StudentDto getStudent(int studentId);
 
-	public List<StudentDto> getAllStudents(int pageNumber, int pageSize);
+	public List<StudentDto> getAllStudents(int pageNumber, int pageSize, String propertyName, Direction direction);
 
 	public StudentDto insertStudents(StudentDto studentDto);
 
