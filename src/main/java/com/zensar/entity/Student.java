@@ -2,6 +2,7 @@ package com.zensar.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedNativeQuery;
 import javax.persistence.NamedQueries;
@@ -13,6 +14,7 @@ public class Student {
 
 	@Id
 	@Column(name = "id")
+	@GeneratedValue
 	private int studentId;
 
 	@Column(name = "name")
