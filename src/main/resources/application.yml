@@ -37,6 +37,8 @@ spring:
     properties:
       hibernate:
         format_sql: true
-  mvc:
-    pathmatch:
-      matching-strategy: ANT_PATH_MATCHER
+ 
+#  security:
+#    user:
+#      name: user
+#      password: 1234

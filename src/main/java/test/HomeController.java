@@ -13,5 +13,15 @@ public class HomeController {
 	public String sayHello() {
 		return "<h1> Welcome to Spring Boot</h1>";
 	}
+	
+	@RequestMapping("/admin")
+	public String getAdmin() {
+		return "<h1> Welcome to Admin dashboard</h1>";
+	}
+	
+	@RequestMapping("/user")
+	public String getUser() {
+		return "<h1> Welcome to User dashboard</h1>";
+	}
 
 }
