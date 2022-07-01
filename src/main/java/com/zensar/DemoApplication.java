@@ -13,6 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 public class DemoApplication extends SpringBootServletInitializer {
 
 	public static void main(String[] args) {
+		System.out.println("Hellllo!!");
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
