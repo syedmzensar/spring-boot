@@ -1,0 +1,29 @@
+pipeline {
+    agent any
+    
+        
+    tools {
+        maven 'MyMaven' 
+    }
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                git changelog: false, poll: false, url: 'https://github.com/syedmzensar/spring-boot.git'
+            }
+        }
+        
+        stage('Build') {
+            steps{
+                bat "mvn clean install"
+            }
+        }
+
+        
+         stage('Deploy') {
+            steps {
+               deploy adapters: [tomcat9(credentialsId: 'tomcat-cred', path: '', url: 'http://localhost:4444')], contextPath: null, war: '**/*.war'
+            }
+        }
+    }
+}
